@@ -1,0 +1,8 @@
+>=cRight
+<=cLeft
++=cInc
+-=cDec
+,=cRead
+.=cPrint
+[=cOpenB +
+]=cClosedB -
