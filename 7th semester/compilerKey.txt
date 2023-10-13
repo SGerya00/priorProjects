@@ -1,0 +1,5 @@
+please use
+-march=native –O3 –lm
+compiler key
+
+gcc 11.2.0 was used to compile
