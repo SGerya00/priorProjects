@@ -1,0 +1,58 @@
+template<class T>
+class s_u_p {
+    public:
+    s_u_p() {}
+    s_u_p(T* p = nullptr) : p_(p) {}
+
+    s_u_p(s_u_p& pointer) = delete; // no copy ctor
+
+    s_u_p(s_u_p&& rvalue_pointer) {
+            p_ = rvalue_pointer;
+            rvalue_pointer = nullptr;
+    } // move ctor
+
+    s_u_p& operator=(s_u_p& other) = delete; // no copy operation
+
+    s_u_p& operator=(s_u_p&& other) {
+        delete p_;
+        p_ = other;
+    } // move operation
+
+
+    T* release_() {
+        T* temp = p_;
+        p_ = nullptr;
+        return temp;
+    } //release (release ptr, no delete)
+
+    void reset(T* new_ptr) {
+        T* old_ptr = p_;
+        p_ = new_ptr;
+        if (nullptr != old_ptr) {
+            delete old_ptr;
+        }
+    } //reset (delete, catch new one from parameters)
+
+    T* get() {
+        return p_;
+    } //get (return pointer to the managed object)
+
+    T& operator*() {
+        if (nullptr != p_) {
+            return *p_;
+        }
+        throw 1; //bad
+    } //operator*
+
+    T* operator->() {
+        return p_;
+    } //operator->
+
+    ~s_u_p() {
+        delete p_;
+        p_ = nullptr;
+    }
+
+    private:
+    T * p_ = nullptr;
+}
